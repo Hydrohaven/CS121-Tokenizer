@@ -21,7 +21,9 @@ def tokenize(filepath: str) -> list[str]:
             tokens.append(current_token) 
 
     return tokens
-            
+
+# My function runs in linear time relative to the total amount of tokens
+# Achieving a time complexity of O(n), where n is the total number of tokens
 def tokenFrequency(tokens: list[str]) -> dict[str, int]:
     freq = dict()
 
