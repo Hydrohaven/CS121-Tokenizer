@@ -4,22 +4,26 @@ def tokenize(filepath: str) -> list[str]:
     tokens: list[str] = list()
     current_token = ''
 
-    # TODO: ADD ERROR HANDLING
-    # Read parameter filepath
-    with open(filepath, 'r', encoding='utf-8') as file:
-        # Iterate through file character-by-character until EOF
-        while char := file.read(1).lower():
-            # Not whitespace == add char to current token, else add to token list
-            if not char.isspace() and char.isalnum():
-                current_token += char
-            else:
-                if current_token:
-                    tokens.append(current_token)
-                    current_token = ''
+    try:
+        # Read parameter filepath
+        with open(filepath, 'r', encoding='utf-8') as file:
+            # Iterate through file character-by-character until EOF
+            while char := file.read(1).lower():
+                # If non-whitespace, else (reached delimiter) append new token
+                if not char.isspace():
+                    # Checks for alphanumeric + english language character (skips bad input)
+                    if char.isalnum() and char.isascii():
+                        current_token += char
+                else:
+                    if current_token:
+                        tokens.append(current_token)
+                        current_token = ''
 
-        # Adds token at EOF if its truthy
-        if current_token: 
-            tokens.append(current_token) 
+            # Adds token at EOF if its truthy
+            if current_token: 
+                tokens.append(current_token) 
+    except FileNotFoundError as e:
+        print('File does not exist, please try again:', e)
 
     return tokens
 
@@ -39,7 +43,7 @@ def tokenFrequency(tokens: list[str]) -> dict[str, int]:
 # My function runs in loglinear time relative to the amount of keys
 # Achieving a run time complexity of O(n log n) where n is 
 #  the number of items in the dictionary with and the sorting
-#  algorithm pee
+#  algorithm (timsort) compares items log n times 
 def printFrequency(frequency: dict[str, int]) -> None:
     ordered_keys = [k for k, _ in sorted(list(frequency.items()), key=lambda f: f[1], reverse=True)]
     for key in ordered_keys:
