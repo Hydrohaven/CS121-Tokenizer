@@ -4,6 +4,7 @@ def tokenize(filepath: str) -> list[str]:
     tokens: list[str] = list()
     current_token = ''
 
+    # TODO: ADD ERROR HANDLING
     # Read parameter filepath
     with open(filepath, 'r', encoding='utf-8') as file:
         # Iterate through file character-by-character until EOF
@@ -35,7 +36,17 @@ def tokenFrequency(tokens: list[str]) -> dict[str, int]:
 
     return freq
 
+# My function runs in loglinear time relative to the amount of keys
+# Achieving a run time complexity of O(n log n) where n is 
+#  the number of items in the dictionary with and the sorting
+#  algorithm pee
+def printFrequency(frequency: dict[str, int]) -> None:
+    ordered_keys = [k for k, _ in sorted(list(frequency.items()), key=lambda f: f[1], reverse=True)]
+    for key in ordered_keys:
+        print(key, '=>', frequency[key])
+
 if __name__ == '__main__':
     filepath: str = input("Please enter a file path to read: ")
     print(tokens := tokenize(filepath))
     print(freq := tokenFrequency(tokens))
+    printFrequency(freq)
