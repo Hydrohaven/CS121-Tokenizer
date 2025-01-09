@@ -1,3 +1,5 @@
+# My function runs in linear time relative to the amount of characters in the file
+# Achieving an O(n) time complexity where n is the number of total characters
 def tokenize(filepath: str) -> list[str]:
     tokens: list[str] = list()
     current_token = ''
@@ -20,7 +22,18 @@ def tokenize(filepath: str) -> list[str]:
 
     return tokens
             
+def tokenFrequency(tokens: list[str]) -> dict[str, int]:
+    freq = dict()
+
+    for token in tokens:
+        if freq.get(token):
+            freq[token] += 1
+        else:
+            freq[token] = 1
+
+    return freq
 
 if __name__ == '__main__':
     filepath: str = input("Please enter a file path to read: ")
     print(tokens := tokenize(filepath))
+    print(freq := tokenFrequency(tokens))
