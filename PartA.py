@@ -1,3 +1,5 @@
+import sys
+
 # My function runs in linear time relative to the amount of characters in the file
 # Achieving an O(n) time complexity where n is the number of total characters
 def tokenize(filepath: str) -> list[str]:
@@ -50,7 +52,8 @@ def printFrequency(frequency: dict[str, int]) -> None:
         print(key, '=>', frequency[key])
 
 if __name__ == '__main__':
-    filepath: str = input("Please enter a file path to read: ")
+    # Retrieves 2nd argument (filepath) after py command
+    filepath: str = sys.argv[1]
     print(tokens := tokenize(filepath))
     print(freq := tokenFrequency(tokens))
     printFrequency(freq)
