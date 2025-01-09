@@ -7,13 +7,13 @@ def tokenize(filepath: str) -> list[str]:
         # Iterate through file character-by-character until EOF
         while char := file.read(1).lower():
             # Not whitespace == add char to current token, else add to token list
-            if not char.isspace():
+            if not char.isspace() and char.isalnum():
                 current_token += char
             else:
                 if current_token:
                     tokens.append(current_token)
                     current_token = ''
-                    
+
         # Adds token at EOF if its truthy
         if current_token: 
             tokens.append(current_token) 
