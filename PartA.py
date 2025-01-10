@@ -11,15 +11,15 @@ def tokenize(filepath: str) -> list[str]:
         with open(filepath, 'r', encoding='utf-8') as file:
             # Iterate through file character-by-character until EOF
             while char := file.read(1).lower():
-                # If non-whitespace, else (reached delimiter) append new token
-                if not char.isspace():
+                # If whitespace, not alphanumeric, or isnt english, add token, else build token
+                if char.isspace() or not char.isalnum() or not char.isascii():
                     # Checks for alphanumeric + english language character (skips bad input)
-                    if char.isalnum() and char.isascii():
-                        current_token += char
-                else:
                     if current_token:
                         tokens.append(current_token)
                         current_token = ''
+                else:
+                    current_token += char
+                    
 
             # Adds token at EOF if its truthy
             if current_token: 
@@ -47,7 +47,7 @@ def tokenFrequency(tokens: list[str]) -> dict[str, int]:
 #  the number of items in the dictionary with and the sorting
 #  algorithm (timsort) compares items log n times 
 def printFrequency(frequency: dict[str, int]) -> None:
-    ordered_keys = [k for k, _ in sorted(list(frequency.items()), key=lambda f: f[1], reverse=True)]
+    ordered_keys = [k for k, _ in sorted(frequency.items(), key=lambda f: (-f[1], f[0]))]
     for key in ordered_keys:
         print(key, '=>', frequency[key])
 
