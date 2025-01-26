@@ -54,6 +54,8 @@ def printFrequency(frequency: dict[str, int]) -> None:
 if __name__ == '__main__':
     # Retrieves 2nd argument (filepath) after py command
     filepath: str = sys.argv[1]
-    print(tokens := tokenize(filepath))
-    print(freq := tokenFrequency(tokens))
-    printFrequency(freq)
+    tokens = tokenize(filepath)
+    if tokens:
+        freq = tokenFrequency(tokens)
+        printFrequency(freq)
+    
