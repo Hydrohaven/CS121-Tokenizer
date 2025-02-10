@@ -1,4 +1,4 @@
-import PartA as pA
+from . import PartA as pA
 import sys
 
 # My function runs in linear time relative to the number of tokens in file 1
